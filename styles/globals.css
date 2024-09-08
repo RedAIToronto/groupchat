@@ -2,26 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.win-xp-theme {
+  font-family: 'Tahoma', sans-serif;
+  background-color: #ECE9D8;
+  color: #000000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.win-xp-window {
+  border: 1px solid #0055EA;
+  border-radius: 8px;
+  box-shadow: inset -1px -1px #00138C, inset 1px 1px #0831D9, inset -2px -2px #001EA0, inset 2px 2px #166AEE;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.win-xp-button {
+  background: linear-gradient(180deg, #fff 0%, #ECE9D8 100%);
+  border: 1px solid #003C74;
+  box-shadow: inset 1px 1px 0px #FFFFFF, inset -1px -1px 0px #7E7E7E;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.win-xp-titlebar {
+  background: linear-gradient(to right, #0054E3, #0078D7);
+  color: white;
 }
