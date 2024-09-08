@@ -1,14 +1,7 @@
-import { useEffect } from 'react';
-import SolanaIRCChat from '../components/SolanaIRCChat';
+import dynamic from 'next/dynamic';
+
+const SolanaIRCChat = dynamic(() => import('../components/SolanaIRCChat'), { ssr: false });
 
 export default function Home() {
-  useEffect(() => {
-    fetch('/api/socket');
-  }, []);
-
-  return (
-      <div>
-        <SolanaIRCChat />
-      </div>
-  );
+    return <SolanaIRCChat />;
 }
