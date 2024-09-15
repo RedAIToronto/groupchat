@@ -1,16 +1,18 @@
 // components/Header.js
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X, Map } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
-import RoadmapPopup from './RoadmapPopup';
+import PwigmapPopup from './PwigmapPopup';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isRoadmapOpen, setIsRoadmapOpen] = useState(false);
+  const [isPwigmapOpen, setIsPwigmapOpen] = useState(false);
+  const router = useRouter();
   const contractAddress = "TBD"; // Placeholder for the contract address
 
   const navigationIcons = [
@@ -18,6 +20,40 @@ export default function Header() {
     { name: 'Telegram', href: '#', src: '/image.png', size: 22 },
     { name: 'Chart', href: '#', src: 'https://cdn.prod.website-files.com/6421d264d066fd2b24b91b20/661375b92a7e161501f4b5e5_dexscreener.322a5a2d.png', size: 22 },
   ];
+
+  const scrollToPwigmap = () => {
+    const pwigmapSection = document.getElementById('pwigmap');
+    if (pwigmapSection) {
+      pwigmapSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      if (url === '/roadmap') {
+        setIsPwigmapOpen(true);
+      } else {
+        setIsPwigmapOpen(false);
+      }
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router]);
+
+  const openPwigmapPopup = useCallback(() => {
+    console.log('Opening Pwigmap');
+    setIsPwigmapOpen(true);
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  const handleClosePwigmap = useCallback(() => {
+    console.log('Closing Pwigmap');
+    setIsPwigmapOpen(false);
+  }, []);
 
   return (
     <>
@@ -73,9 +109,9 @@ export default function Header() {
                 </a>
               ))}
               <button
-                onClick={() => setIsRoadmapOpen(true)}
+                onClick={openPwigmapPopup}
                 className="text-pink-300 hover:text-pink-500 transition-colors"
-                aria-label="Roadmap"
+                aria-label="Pwigmap"
               >
                 <div className="w-10 h-10 relative rounded-full bg-white border-2 border-black flex items-center justify-center overflow-hidden">
                   <Map size={22} />
@@ -126,16 +162,24 @@ export default function Header() {
                 </li>
               ))}
               <li>
-                <button className="bg-white text-black font-bold py-2 px-6 rounded-full border-2 border-pink-500 hover:bg-pink-100 transition-colors">
-                  <span className="text-sm tracking-wider font-['Freckle_Face']">BUY PWIG</span>
+                <button
+                  onClick={openPwigmapPopup}
+                  className="text-pink-300 hover:text-pink-500 transition-colors"
+                  aria-label="Pwigmap"
+                >
+                  <div className="w-10 h-10 relative rounded-full bg-white border-2 border-black flex items-center justify-center overflow-hidden">
+                    <Map size={22} />
+                  </div>
                 </button>
               </li>
             </ul>
           </nav>
         )}
+        
+        {isPwigmapOpen && (
+          <PwigmapPopup onClose={handleClosePwigmap} />
+        )}
       </header>
-      
-      {isRoadmapOpen && <RoadmapPopup onClose={() => setIsRoadmapOpen(false)} />}
     </>
   );
 }

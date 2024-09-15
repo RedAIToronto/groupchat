@@ -2,8 +2,8 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { Copy, CheckCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Copy, CheckCircle, ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import ReversedAnimatedTicker from './ReversedAnimatedTicker';
 import { useState } from 'react';
@@ -17,16 +17,19 @@ export default function HowToBuySection() {
       title: "Set Up Phantom Wallet",
       desc: "Install Phantom, the user-friendly Solana wallet. Your gateway to $PWIG awaits!",
       icon: "https://shawk.xyz/wp-content/uploads/2024/09/White-Ghost_docs_nu.svg",
+      link: "https://phantom.app/",
     },
     {
       title: "Acquire Solana (SOL)",
       desc: "Get SOL from top exchanges. Transfer it to Phantom and prepare for $PWIG!",
       icon: "https://shawk.xyz/wp-content/uploads/2024/09/630e1828d8d76.png",
+      link: "https://www.coinbase.com/how-to-buy/solana",
     },
     {
       title: "Swap SOL for $PWIG",
       desc: "Visit pump.fun, connect Phantom, and swap SOL for $PWIG. Join the oink revolution!",
       icon: "https://media.discordapp.net/attachments/1237005495412461569/1284621494697332839/pwig_logo.png?ex=66e7f53f&is=66e6a3bf&hm=d5ea9cf9a4da512d57f7463372d42cb74981830f80ddddb4894012da26ccd0ec&=&format=webp&quality=lossless&width=1254&height=1254",
+      link: "https://pump.fun/",
     },
   ];
 
@@ -48,26 +51,44 @@ export default function HowToBuySection() {
             objectFit="cover"
             className="opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-sky-400/70 to-pink-500/70 dark:from-sky-700/70 dark:to-pink-900/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-sky-400/70 to-pink-500/70 dark:from-sky-700/70 dark:to-pink-900/70 mix-blend-overlay"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-6xl font-bold mb-16 text-center text-white dark:text-pink-300 font-['Freckle_Face'] drop-shadow-lg">How to Buy $PWIG</h2>
+          <motion.h2 
+            className="text-6xl font-bold mb-16 text-center text-white dark:text-pink-300 font-['Freckle_Face'] drop-shadow-lg"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            How to Buy $PWIG
+          </motion.h2>
           <div className="grid gap-12 md:grid-cols-3">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
-                className="bg-white bg-opacity-20 dark:bg-opacity-10 backdrop-blur-lg p-10 rounded-3xl shadow-2xl transform transition-all hover:scale-105"
+                className="bg-white dark:bg-gray-800 bg-opacity-20 dark:bg-opacity-20 backdrop-blur-lg p-10 rounded-3xl shadow-2xl transform transition-all hover:scale-105 border border-pink-300/30"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
                 viewport={{ once: true }}
               >
                 <div className="flex justify-center mb-8">
-                  <Image src={step.icon} alt={step.title} width={80} height={80} />
+                  <Image src={step.icon} alt={step.title} width={80} height={80} className="rounded-full" />
                 </div>
-                <h3 className="text-3xl font-bold mb-6 text-center text-white dark:text-pink-300 font-['Freckle_Face']">{step.title}</h3>
-                <p className="text-center text-white dark:text-pink-200 text-lg font-semibold">{step.desc}</p>
+                <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-pink-300 font-['Freckle_Face']">{step.title}</h3>
+                <p className="text-center text-gray-700 dark:text-pink-200 text-lg font-semibold mb-6">{step.desc}</p>
+                <motion.a
+                  href={step.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white rounded-full px-6 py-3 transition-all duration-300 ease-in-out transform hover:scale-105"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="mr-2">Learn More</span>
+                  <ExternalLink size={18} />
+                </motion.a>
               </motion.div>
             ))}
           </div>
@@ -109,16 +130,18 @@ export default function HowToBuySection() {
                 </Button>
               </div>
             </div>
-            {copied && (
-              <motion.p 
-                className="text-green-400 text-center mt-4 font-bold text-lg"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-              >
-                Oink! Address copied to clipboard!
-              </motion.p>
-            )}
+            <AnimatePresence>
+              {copied && (
+                <motion.p 
+                  className="text-green-400 text-center mt-4 font-bold text-lg"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                >
+                  Oink! Address copied to clipboard!
+                </motion.p>
+              )}
+            </AnimatePresence>
           </motion.div>
           <div className="mt-24 h-24 bg-gradient-to-b from-transparent to-brown-900"></div>
         </div>

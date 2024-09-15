@@ -1,51 +1,119 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CheckCircle, X } from 'lucide-react';
+import { CheckCircle, Clock, ChevronRight, Users, Rocket, TrendingUp, Zap, Globe, Video } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function PwigmapSection() {
+  const [expandedStep, setExpandedStep] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if there's a stage-step parameter in the URL
+    const { stage, step } = router.query;
+    if (stage && step) {
+      setExpandedStep(`${stage}-${step}`);
+    }
+  }, [router.query]);
+
   const roadmapItems = [
-    { step: 1, text: "pump.fun Launch", completed: false },
-    { step: 2, text: "Dexscreener Update", completed: false },
-    { step: 3, text: "Raydium Listing", completed: false },
-    { step: 4, text: "Dexscreener Ads", completed: false },
-    { step: 5, text: "Dexscreener Boost 10x", completed: false },
-    { step: 6, text: "Moontok Listing", completed: false },
-    { step: 7, text: "Raiding and Community Building", completed: false },
-    { step: 8, text: "CoinGecko Listing", completed: false },
-    { step: 9, text: "CoinMarketCap Listing", completed: false },
-    { step: 10, text: "To New Heights", completed: false },
+    {
+      stage: 1,
+      title: "Launch & Initial Growth",
+      items: [
+        { title: "pump.fun Launch", description: "Official launch of the pump.fun platform, introducing $PWIG to the world.", completed: true, icon: Rocket },
+        { title: "Dexscreener Update", description: "Integration of banner and social links on Dexscreener for improved visibility.", completed: false, icon: TrendingUp },
+        { title: "Raydium Migration", description: "Automatic migration from pump.fun to Raydium DEX after completing the bonding curve.", completed: false, icon: TrendingUp },
+        { title: "DEX Ads Campaign", description: "Targeted advertising campaigns on Dexscreener, Dextools, and other platforms.", completed: false, icon: TrendingUp },
+      ]
+    },
+    {
+      stage: 2,
+      title: "Community Expansion & Visibility",
+      items: [
+        { title: "Raids & Community Building", description: "Organizing community raids and events to boost engagement and growth.", completed: false, icon: Users },
+        { title: "Moontok Listing", description: "Strategic listing on Moontok to expand reach and accessibility.", completed: false, icon: Globe },
+        { title: "Dexscreener 10x Boost", description: "Major push to increase Dexscreener metrics by 10x, enhancing market presence.", completed: false, icon: Zap },
+        { title: "Soltrending Listing", description: "Integration with Soltrending for increased visibility in the Solana ecosystem.", completed: false, icon: TrendingUp },
+      ]
+    },
+    {
+      stage: 3,
+      title: "Mainstream Recognition & Growth",
+      items: [
+        { title: "CoinGecko Listing", description: "Official listing on CoinGecko for wider market exposure and credibility.", completed: false, icon: Globe },
+        { title: "CoinMarketCap Listing", description: "Milestone listing on CoinMarketCap, solidifying $PWIG's market position.", completed: false, icon: Globe },
+        { title: "KOL Onboarding", description: "Partnering with Key Opinion Leaders to amplify $PWIG's message and reach.", completed: false, icon: Users },
+        { title: "Social Media Expansion", description: "Launch of TikTok and Instagram Reels campaigns to onboard mainstream users.", completed: false, icon: Video },
+      ]
+    },
   ];
 
+  const handleStepClick = (e, stageIndex, index) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newExpandedStep = `${stageIndex}-${index}`;
+    setExpandedStep(prevStep => prevStep === newExpandedStep ? null : newExpandedStep);
+  };
+
   return (
-    <section id="pwigmap" className="py-24 bg-gradient-to-b from-pink-100 to-sky-200 dark:from-pink-900 dark:to-sky-900">
-      <div className="container mx-auto px-4">
-        <h2 className="text-6xl font-extrabold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-purple-600 font-['Freckle_Face']">PWIGMAP</h2>
-        <div className="max-w-4xl mx-auto">
-          {roadmapItems.map((item, index) => (
-            <motion.div
-              key={item.step}
-              className="flex items-center mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center mr-6 shadow-lg">
-                <span className="text-white font-bold text-xl">{item.step}</span>
-              </div>
-              <div className="flex-grow bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-pink-200 dark:border-pink-800">
-                <p className="text-xl font-semibold text-gray-800 dark:text-white font-['Freckle_Face']">{item.text}</p>
-              </div>
-              {item.completed ? (
-                <CheckCircle className="flex-shrink-0 w-10 h-10 text-green-500 ml-6" />
-              ) : (
-                <X className="flex-shrink-0 w-10 h-10 text-red-500 ml-6" />
-              )}
-            </motion.div>
-          ))}
+    <div className="pwigmap-content relative z-10">
+      {roadmapItems.map((stage, stageIndex) => (
+        <div key={stage.stage} className="mb-12">
+          <h3 className="text-3xl font-bold text-pink-600 dark:text-pink-400 mb-4 font-['Freckle_Face']">
+            Stage {stage.stage}: {stage.title}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {stage.items.map((item, index) => (
+              <motion.div
+                key={index}
+                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: (stageIndex * 4 + index) * 0.1 }}
+              >
+                <motion.div
+                  className={`bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4 shadow-xl backdrop-blur-sm cursor-pointer transition-all duration-300 hover:shadow-2xl border-2 ${item.completed ? 'border-green-400' : 'border-pink-400'}`}
+                  whileHover={{ scale: 1.03 }}
+                  onClick={(e) => handleStepClick(e, stageIndex, index)}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-lg font-bold text-gray-800 dark:text-white font-['Freckle_Face'] flex items-center">
+                      <item.icon className="w-5 h-5 mr-2 text-pink-500" />
+                      {item.title}
+                    </h4>
+                    <motion.div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${item.completed ? 'bg-green-400' : 'bg-pink-400'}`}
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      {item.completed ? (
+                        <CheckCircle className="w-5 h-5 text-white" />
+                      ) : (
+                        <Clock className="w-5 h-5 text-white" />
+                      )}
+                    </motion.div>
+                  </div>
+                  <motion.p
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: expandedStep === `${stageIndex}-${index}` ? 1 : 0, height: expandedStep === `${stageIndex}-${index}` ? 'auto' : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm text-gray-600 dark:text-gray-300 mt-2 overflow-hidden"
+                  >
+                    {item.description}
+                  </motion.p>
+                  <motion.div
+                    className="mt-2 flex justify-end items-center text-pink-500 dark:text-pink-400"
+                    animate={{ rotate: expandedStep === `${stageIndex}-${index}` ? 90 : 0 }}
+                  >
+                    <ChevronRight size={20} />
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 }
