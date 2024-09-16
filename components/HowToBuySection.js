@@ -2,14 +2,15 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { Copy, CheckCircle, ExternalLink } from 'lucide-react';
+import { Copy, CheckCircle, ExternalLink, ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import ReversedAnimatedTicker from './ReversedAnimatedTicker';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function HowToBuySection() {
   const [copied, setCopied] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
   const contractAddress = "TBD"; // Dummy Solana address
 
   const steps = [
@@ -39,6 +40,16 @@ export default function HowToBuySection() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prevStep) => (prevStep + 1) % steps.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const nextStep = () => setActiveStep((prevStep) => (prevStep + 1) % steps.length);
+  const prevStep = () => setActiveStep((prevStep) => (prevStep - 1 + steps.length) % steps.length);
+
   return (
     <>
       <ReversedAnimatedTicker />
@@ -63,34 +74,58 @@ export default function HowToBuySection() {
           >
             How to Buy $PWIG
           </motion.h2>
-          <div className="grid gap-12 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                className="bg-white dark:bg-gray-800 bg-opacity-20 dark:bg-opacity-20 backdrop-blur-lg p-10 rounded-3xl shadow-2xl transform transition-all hover:scale-105 border border-pink-300/30"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex justify-center mb-8">
-                  <Image src={step.icon} alt={step.title} width={80} height={80} className="rounded-full" />
-                </div>
-                <h3 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-pink-300 font-['Freckle_Face']">{step.title}</h3>
-                <p className="text-center text-gray-700 dark:text-pink-200 text-lg font-semibold mb-6">{step.desc}</p>
-                <motion.a
-                  href={step.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white rounded-full px-6 py-3 transition-all duration-300 ease-in-out transform hover:scale-105"
-                  whileHover={{ scale: 1.05 }}
+          
+          <div className="flex flex-col items-center justify-center mb-16">
+            <div className="flex items-center justify-center gap-8 mb-8">
+              {steps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  className={`bg-white dark:bg-gray-800 bg-opacity-20 dark:bg-opacity-20 backdrop-blur-lg p-4 rounded-full shadow-2xl transition-all duration-300 cursor-pointer ${activeStep === index ? 'border-4 border-pink-500 scale-110' : 'border border-pink-300/30'}`}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.2 }}
+                  onClick={() => setActiveStep(index)}
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <span className="mr-2">Learn More</span>
-                  <ExternalLink size={18} />
-                </motion.a>
-              </motion.div>
-            ))}
+                  <Image src={step.icon} alt={step.title} width={60} height={60} className="rounded-full" />
+                </motion.div>
+              ))}
+            </div>
+            <div className="w-full max-w-3xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white dark:bg-gray-800 bg-opacity-20 dark:bg-opacity-20 backdrop-blur-lg p-8 rounded-3xl shadow-2xl"
+                >
+                  <h3 className="text-3xl font-bold mb-4 text-center text-gray-800 dark:text-pink-300 font-['Freckle_Face']">{steps[activeStep].title}</h3>
+                  <p className="text-center text-gray-700 dark:text-pink-200 text-lg font-semibold mb-6">{steps[activeStep].desc}</p>
+                  <motion.a
+                    href={steps[activeStep].link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white rounded-full px-6 py-3 transition-all duration-300 ease-in-out transform hover:scale-105 mx-auto"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="mr-2">Learn More</span>
+                    <ExternalLink size={18} />
+                  </motion.a>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <div className="flex justify-between w-full max-w-3xl mt-8">
+              <Button onClick={prevStep} className="bg-pink-500 hover:bg-pink-600 text-white rounded-full p-2">
+                <ArrowLeft size={24} />
+              </Button>
+              <Button onClick={nextStep} className="bg-pink-500 hover:bg-pink-600 text-white rounded-full p-2">
+                <ArrowRight size={24} />
+              </Button>
+            </div>
           </div>
 
           {/* Contract Address Section */}
@@ -143,7 +178,6 @@ export default function HowToBuySection() {
               )}
             </AnimatePresence>
           </motion.div>
-          <div className="mt-24 h-24 bg-gradient-to-b from-transparent to-brown-900"></div>
         </div>
       </section>
     </>
