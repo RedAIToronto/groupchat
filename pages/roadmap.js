@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import PwigmapPopup from '../components/PwigmapPopup';
 import { useRouter } from 'next/router';
 
-// TODO: Replace with actual contract address when available
-const CONTRACT_ADDRESS = "TBD";
-
-// TODO: Replace with actual buy link when available
-const BUY_LINK = "https://raydium.io/swap/";
+// Update these constants
+const CONTRACT_ADDRESS = "Aeg8m3xBiFTwRP8jrk2cMFZ9ZUhTWtkWPcDdRyRHpump";
+const BUY_LINK = "https://raydium.io/swap/?inputCurrency=sol&outputCurrency=Aeg8m3xBiFTwRP8jrk2cMFZ9ZUhTWtkWPcDdRyRHpump&fixed=in";
 
 export default function RoadmapPage() {
   const [mounted, setMounted] = useState(false);

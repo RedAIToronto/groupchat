@@ -8,6 +8,10 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import PwigmapPopup from './PwigmapPopup';
 
+// At the top of the file, add these constants
+const CONTRACT_ADDRESS = "Aeg8m3xBiFTwRP8jrk2cMFZ9ZUhTWtkWPcDdRyRHpump";
+const BUY_LINK = "https://raydium.io/swap/?inputCurrency=sol&outputCurrency=Aeg8m3xBiFTwRP8jrk2cMFZ9ZUhTWtkWPcDdRyRHpump&fixed=in";
+
 export default function Footer() {
   const [isPwigmapOpen, setIsPwigmapOpen] = useState(false);
   const router = useRouter();
@@ -118,6 +122,16 @@ export default function Footer() {
         </div>
       </div>
       {isPwigmapOpen && <PwigmapPopup onClose={handleClosePwigmap} />}
+      <motion.a
+        href={BUY_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-6 rounded-full hover:from-pink-600 hover:to-purple-700 transition-colors"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <span className="text-sm tracking-wider font-['Freckle_Face']">BUY $PWIG</span>
+      </motion.a>
     </footer>
   );
 }

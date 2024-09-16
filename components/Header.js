@@ -9,9 +9,9 @@ import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import PwigmapPopup from './PwigmapPopup';
 
-// At the top of the file, add these constants
-const CONTRACT_ADDRESS = "TBD"; // TODO: Replace with actual contract address when available
-const BUY_LINK = "https://raydium.io/swap/"; // TODO: Replace with actual buy link when available
+// At the top of the file, update these constants
+const CONTRACT_ADDRESS = "Aeg8m3xBiFTwRP8jrk2cMFZ9ZUhTWtkWPcDdRyRHpump";
+const BUY_LINK = "https://raydium.io/swap/?inputCurrency=sol&outputCurrency=Aeg8m3xBiFTwRP8jrk2cMFZ9ZUhTWtkWPcDdRyRHpump&fixed=in";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
