@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import PwigmapPopup from '../components/PwigmapPopup';
 import { useRouter } from 'next/router';
 
+// TODO: Replace with actual contract address when available
+const CONTRACT_ADDRESS = "TBD";
+
+// TODO: Replace with actual buy link when available
+const BUY_LINK = "https://raydium.io/swap/";
+
 export default function RoadmapPage() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -21,5 +27,5 @@ export default function RoadmapPage() {
 
   if (!mounted) return null;
 
-  return <PwigmapPopup isStandalone={true} />;
+  return <PwigmapPopup isStandalone={true} contractAddress={CONTRACT_ADDRESS} buyLink={BUY_LINK} />;
 }

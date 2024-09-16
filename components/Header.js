@@ -9,11 +9,15 @@ import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import PwigmapPopup from './PwigmapPopup';
 
+// At the top of the file, add these constants
+const CONTRACT_ADDRESS = "TBD"; // TODO: Replace with actual contract address when available
+const BUY_LINK = "https://raydium.io/swap/"; // TODO: Replace with actual buy link when available
+
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPwigmapOpen, setIsPwigmapOpen] = useState(false);
   const router = useRouter();
-  const contractAddress = "TBD"; // Placeholder for the contract address
+  const contractAddress = CONTRACT_ADDRESS; // Updated to use the constant
 
   const navigationIcons = [
     { name: 'Twitter', href: 'https://x.com/solpwig', src: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/x-social-media-black-icon.png', size: 18 },
@@ -57,7 +61,7 @@ export default function Header() {
             height={20}
             className="mr-2"
           />
-          <p className="text-black text-sm font-mono">Contract: {contractAddress}</p>
+          <p className="text-black text-sm font-mono">Contract: {CONTRACT_ADDRESS}</p>
         </div>
       </div>
 
@@ -106,7 +110,7 @@ export default function Header() {
               <span className="text-sm tracking-wider font-['Freckle_Face']">ROADMAP</span>
             </button>
             <a
-              href="https://raydium.io/swap/"
+              href={BUY_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-6 rounded-full hover:from-pink-600 hover:to-purple-700 transition-colors"
@@ -166,7 +170,7 @@ export default function Header() {
             </li>
             <li>
               <a
-                href="https://raydium.io/swap/"
+                href={BUY_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2 px-6 rounded-full hover:from-pink-600 hover:to-purple-700 transition-colors"

@@ -3,9 +3,11 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <link href="https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap" rel="stylesheet" />
+          <title>$PWIG</title>
+          <meta name="description" content="$PWIG - The revolutionary meme coin on Solana" />
         </Head>
         <body>
           <Main />

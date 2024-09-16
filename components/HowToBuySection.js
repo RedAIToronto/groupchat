@@ -8,10 +8,13 @@ import Image from 'next/image';
 import ReversedAnimatedTicker from './ReversedAnimatedTicker';
 import { useState, useEffect } from 'react';
 
+// At the top of the file, add these constants
+const CONTRACT_ADDRESS = "TBD"; // TODO: Replace with actual contract address when available
+const BUY_LINK = "https://raydium.io/swap/"; // TODO: Replace with actual buy link when available
+
 export default function HowToBuySection() {
   const [copied, setCopied] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const contractAddress = "TBD"; // Dummy Solana address
 
   const steps = [
     {
@@ -28,14 +31,14 @@ export default function HowToBuySection() {
     },
     {
       title: "Swap SOL for $PWIG",
-      desc: "Visit pump.fun, connect Phantom, and swap SOL for $PWIG. Join the oink revolution!",
+      desc: "Visit the official swap page, connect Phantom, and swap SOL for $PWIG. Join the oink revolution!",
       icon: "https://media.discordapp.net/attachments/1237005495412461569/1284621494697332839/pwig_logo.png?ex=66e7f53f&is=66e6a3bf&hm=d5ea9cf9a4da512d57f7463372d42cb74981830f80ddddb4894012da26ccd0ec&=&format=webp&quality=lossless&width=1254&height=1254",
-      link: "https://pump.fun/",
+      link: BUY_LINK,
     },
   ];
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(contractAddress);
+    navigator.clipboard.writeText(CONTRACT_ADDRESS);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -153,7 +156,7 @@ export default function HowToBuySection() {
               <div className="flex items-center justify-between w-full bg-white dark:bg-gray-800 rounded-xl p-4 border border-pink-300/50">
                 <div className="flex items-center space-x-4 flex-grow">
                   <span className="text-pink-500 dark:text-pink-300 font-semibold">Contract:</span>
-                  <code className="text-gray-700 dark:text-gray-300 text-lg font-mono bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg flex-grow">{contractAddress}</code>
+                  <code className="text-gray-700 dark:text-gray-300 text-lg font-mono bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-lg flex-grow">{CONTRACT_ADDRESS}</code>
                 </div>
                 <Button
                   onClick={copyToClipboard}
