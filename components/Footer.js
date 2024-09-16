@@ -13,15 +13,14 @@ export default function Footer() {
   const router = useRouter();
 
   const navigationIcons = [
-    { name: 'Twitter', href: '#', src: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/x-social-media-black-icon.png', size: 18 },
-    { name: 'Telegram', href: '#', src: '/image.png', size: 22 },
-    { name: 'Chart', href: '#', src: 'https://cdn.prod.website-files.com/6421d264d066fd2b24b91b20/661375b92a7e161501f4b5e5_dexscreener.322a5a2d.png', size: 22 },
+    { name: 'Twitter', href: 'https://x.com/solpwig', src: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/x-social-media-black-icon.png', size: 18 },
+    { name: 'Telegram', href: 'https://t.me/pwigportal', src: '/image.png', size: 22 },
+    { name: 'Chart', href: 'https://t.me/pwigportal', src: 'https://cdn.prod.website-files.com/6421d264d066fd2b24b91b20/661375b92a7e161501f4b5e5_dexscreener.322a5a2d.png', size: 22 },
   ];
 
   const footerLinks = [
     { name: 'About', href: '#about' },
     { name: 'How to Buy', href: '#how-to-buy' },
-    { name: 'Roadmap', onClick: () => handleOpenPwigmap() },
     { name: 'Roadmap', onClick: () => handleOpenPwigmap() },
   ];
 
@@ -85,6 +84,8 @@ export default function Footer() {
                 <motion.a
                   key={item.name}
                   href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-pink-300 hover:text-pink-500 transition-colors"
                   aria-label={item.name}
                   whileHover={{ scale: 1.1 }}
