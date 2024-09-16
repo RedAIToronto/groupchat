@@ -22,6 +22,7 @@ export default function Footer() {
     { name: 'About', href: '#about' },
     { name: 'How to Buy', href: '#how-to-buy' },
     { name: 'Roadmap', onClick: () => handleOpenPwigmap() },
+    { name: 'Roadmap', onClick: () => handleOpenPwigmap() },
   ];
 
   const handleOpenPwigmap = useCallback(() => {
