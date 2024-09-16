@@ -7,7 +7,7 @@ class MyDocument extends Document {
         <Head>
           <link href="https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap" rel="stylesheet" />
           <title>$PWIG</title>
-          <meta name="description" content="$PWIG - The revolutionary meme coin on Solana" />
+          <meta name="description" content="$PWIG" />
         </Head>
         <body>
           <Main />

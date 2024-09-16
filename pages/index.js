@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-100 to-sky-200 dark:from-pink-900 dark:to-sky-900">
       <Head>
-        <title>PWIG - Pump It With Gains</title>
-        <meta name="description" content="PWIG - The memecoin that's oinking its way to the moon!" />
+        <title>PWIG</title>
+        <meta name="description" content="PWIG" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
